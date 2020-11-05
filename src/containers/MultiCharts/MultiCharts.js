@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
+import * as d3 from 'd3';
 
 import classes from './MultiCharts.css';
 import BubbleChart from '../../components/BubbleChart/BubbleChart';
@@ -10,6 +11,14 @@ import "react-datepicker/dist/react-datepicker-cssmodules.min.css";
 
 
 class MultiCharts extends Component {
+
+    constructor(props) {
+        super(props);
+        this.btn1Ref = React.createRef();
+        this.btn2Ref = React.createRef();
+        this.btn3Ref = React.createRef();
+    }
+
     state = {
         startdate: new Date(),
         enddate: new Date(),
@@ -26,6 +35,20 @@ class MultiCharts extends Component {
         }
     }
 
+    // for button playground
+    resetBtnColorHandler = () => {
+        d3.select(this.btn1Ref.current).style('background-color', '#eee').style('color', 'black');
+        d3.select(this.btn2Ref.current).style('background-color', '#eee').style('color', 'black');
+        d3.select(this.btn3Ref.current).style('background-color', '#eee').style('color', 'black');
+    }
+
+    buttonColorHandler = (ref) => {
+        console.log(ref);
+        this.resetBtnColorHandler();
+        d3.select(ref.current).style('background-color', 'salmon').style('color', 'white');
+    }
+
+    // for datepicker playground
     setDateHandler = (date, which) => {
         this.setState({
             [which]: date
@@ -95,13 +118,18 @@ class MultiCharts extends Component {
         console.log(this.state.bubbleData)
         return (
             <div className={classes.MultiCharts}>
-                <h1>DatePicker</h1>
+                <h1>DatePicker Playground</h1>
                 <div className={classes.MyDatePicker}>
                     <DatePicker selected={this.state.startdate} onChange={date => this.setDateHandler(date, "startdate")} />
                 </div>
                 <div className={classes.MyDatePicker}>
                     <DatePicker selected={this.state.enddate} onChange={date => this.setDateHandler(date, "enddate")} />
                 </div>
+
+                <h1>Button Playground</h1>
+                <span ref={this.btn1Ref} onClick={() => this.buttonColorHandler(this.btn1Ref)}>Button1</span>
+                <span ref={this.btn2Ref} onClick={() => this.buttonColorHandler(this.btn2Ref)}>Button2</span>
+                <span ref={this.btn3Ref} onClick={() => this.buttonColorHandler(this.btn3Ref)}>Button3</span>
 
                 <h1>How to put multiple charts together</h1>
                 <p>Play with the buttons and see how functions are passed into components to trigger re-rendering :)</p>

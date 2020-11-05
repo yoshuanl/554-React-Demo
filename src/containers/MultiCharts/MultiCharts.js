@@ -12,6 +12,7 @@ import "react-datepicker/dist/react-datepicker-cssmodules.min.css";
 class MultiCharts extends Component {
     state = {
         startdate: new Date(),
+        enddate: new Date(),
         bubbleData: inputData.data.slice(0, 10).map(x => [x.week * 50, x.users, x.orders]), // the [x, y, size] of bubbles
         barData: inputData.data,
         chartUI: {
@@ -25,9 +26,9 @@ class MultiCharts extends Component {
         }
     }
 
-    setDateHandler = (date) => {
+    setDateHandler = (date, which) => {
         this.setState({
-            startdate: date
+            [which]: date
         })
     }
 
@@ -94,9 +95,12 @@ class MultiCharts extends Component {
         console.log(this.state.bubbleData)
         return (
             <div className={classes.MultiCharts}>
+                <h1>DatePicker</h1>
                 <div className={classes.MyDatePicker}>
-                    <h1>DatePicker</h1>
-                    <DatePicker selected={this.state.startdate} onChange={date => this.setDateHandler(date)} />
+                    <DatePicker selected={this.state.startdate} onChange={date => this.setDateHandler(date, "startdate")} />
+                </div>
+                <div className={classes.MyDatePicker}>
+                    <DatePicker selected={this.state.enddate} onChange={date => this.setDateHandler(date, "enddate")} />
                 </div>
 
                 <h1>How to put multiple charts together</h1>

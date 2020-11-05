@@ -3,5 +3,6 @@
 }
 
 .MyDatePicker {
-    height: 350px;
+    height: 350px; 
+    display: inline-block;
 }

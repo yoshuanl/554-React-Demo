@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
+import DatePicker from "react-datepicker";
 
 import classes from './MultiCharts.css';
 import BubbleChart from '../../components/BubbleChart/BubbleChart';
 import BarChart from '../../components/BarChart/BarChart';
 import * as inputData from '../../assets/data/newUsers.json';
+//import "../../../node_modules/react-datepicker/dist/react-datepicker.css"
+import "react-datepicker/dist/react-datepicker-cssmodules.min.css";
 
 
-class MultiCharts extends Component { 
+class MultiCharts extends Component {
     state = {
-        bubbleData: inputData.data.slice(0,10).map(x => [x.week*50, x.users, x.orders]), // the [x, y, size] of bubbles
+        startdate: new Date(),
+        bubbleData: inputData.data.slice(0, 10).map(x => [x.week * 50, x.users, x.orders]), // the [x, y, size] of bubbles
         barData: inputData.data,
         chartUI: {
             bubble: {
@@ -19,6 +23,12 @@ class MultiCharts extends Component {
                 color: 'steelblue'
             }
         }
+    }
+
+    setDateHandler = (date) => {
+        this.setState({
+            startdate: date
+        })
     }
 
     // this function is for the bar chart, it is triggered when the "SwitchColor" button is clicked in the BarChart component
@@ -80,24 +90,29 @@ class MultiCharts extends Component {
         })
     }
 
-    render () {
+    render() {
         console.log(this.state.bubbleData)
         return (
             <div className={classes.MultiCharts}>
+                <div className={classes.MyDatePicker}>
+                    <h1>DatePicker</h1>
+                    <DatePicker selected={this.state.startdate} onChange={date => this.setDateHandler(date)} />
+                </div>
+
                 <h1>How to put multiple charts together</h1>
                 <p>Play with the buttons and see how functions are passed into components to trigger re-rendering :)</p>
                 <button onClick={this.updateTitleHandler}>Modify property used by both chart</button>
-                <BubbleChart 
-                    inputData={this.state.bubbleData} 
-                    title={this.state.chartUI.bubble.title} 
-                    resetTitleHandler={this.resetTitleHandler}/>
-                <br/>
-                <BarChart 
-                    inputData={this.state.barData} 
-                    title={this.state.chartUI.bar.title} 
+                <BubbleChart
+                    inputData={this.state.bubbleData}
+                    title={this.state.chartUI.bubble.title}
+                    resetTitleHandler={this.resetTitleHandler} />
+                <br />
+                <BarChart
+                    inputData={this.state.barData}
+                    title={this.state.chartUI.bar.title}
                     resetTitleHandler={this.resetTitleHandler}
-                    barColor={this.state.chartUI.bar.color} 
-                    switchColorHandler={this.switchBarColorHandler}/>
+                    barColor={this.state.chartUI.bar.color}
+                    switchColorHandler={this.switchBarColorHandler} />
             </div>
         );
     }

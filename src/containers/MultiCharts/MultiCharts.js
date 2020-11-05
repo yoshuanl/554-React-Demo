@@ -37,9 +37,10 @@ class MultiCharts extends Component {
 
     // for button playground
     resetBtnColorHandler = () => {
-        d3.select(this.btn1Ref.current).style('background-color', '#eee').style('color', 'black');
-        d3.select(this.btn2Ref.current).style('background-color', '#eee').style('color', 'black');
-        d3.select(this.btn3Ref.current).style('background-color', '#eee').style('color', 'black');
+        d3.selectAll('span').style('background-color', '#eee').style('color', 'black');
+        // d3.select(this.btn1Ref.current).style('background-color', '#eee').style('color', 'black');
+        // d3.select(this.btn2Ref.current).style('background-color', '#eee').style('color', 'black');
+        // d3.select(this.btn3Ref.current).style('background-color', '#eee').style('color', 'black');
     }
 
     buttonColorHandler = (ref) => {
